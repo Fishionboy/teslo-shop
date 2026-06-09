@@ -1,1 +1,10 @@
-<p>home-page works!</p>,
+<h1 class="text-3xl font-bold font-IosevkaCharon">Todos los productos</h1>
+<h2 class="text-xl mb-5">Para todos los gustos</h2>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+
+    <!-- Cards -->
+     <app-product-card [imageCard]=imageInput() [descriptionCard]=description() [titleCard]=title()></app-product-card>
+
+</div>
+

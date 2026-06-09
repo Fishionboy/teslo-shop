@@ -1,2 +1,15 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
+
+@font-face {
+    font-family: "IosevkaCharon";
+    src: url("/assets/fonts/montserrat/IosevkaCharon-Medium.ttf");
+    /* src: url("/assets/fonts/montserrat/Montserrat-Medium.ttf"); */
+    font-weight: 500;
+    font-style: normal;
+}
+
+@theme{
+  --font-IosevkaCharon: "IosevkaCharon", sans-serif;
+}
