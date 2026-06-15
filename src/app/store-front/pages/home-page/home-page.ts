@@ -1,5 +1,8 @@
-import { Component, signal } from '@angular/core';
-import { ProductCard } from "../../components/product-card/product-card";
+import { Component, inject, signal } from '@angular/core';
+import { ProductCard } from "../../../products/components/product-card/product-card";
+import { ProductsService } from '../../../products/services/products.service';
+import { rxResource } from '@angular/core/rxjs-interop';
+
 
 @Component({
   selector: 'app-home-page',
@@ -7,7 +10,18 @@ import { ProductCard } from "../../components/product-card/product-card";
   templateUrl: './home-page.html',
 })
 export class HomePage {
+
+  productsService = inject(ProductsService); 
+
+  productsResource = rxResource({
+    params: ()=> ({}),
+    stream: ({params}) =>{
+      return this.productsService.getProducts();
+    }
+
+  })
+
   title = signal('Card Title');
   imageInput = signal('https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp');
-  description = signal('A card component has a figure, a body part, and inside body there are title and actions parts')
+  description = signal('')
 }

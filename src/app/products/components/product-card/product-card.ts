@@ -5,6 +5,7 @@ import { RouterLink, RouterLinkActive } from "@angular/router";
   selector: 'app-product-card',
   imports: [RouterLink,RouterLinkActive],
   templateUrl: './product-card.html',
+  standalone:true
 })
 export class ProductCard {
   imageCard= input.required<string>();
