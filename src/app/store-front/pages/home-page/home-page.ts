@@ -11,17 +11,17 @@ import { rxResource } from '@angular/core/rxjs-interop';
 })
 export class HomePage {
 
-  productsService = inject(ProductsService); 
+
+
+  productsService = inject(ProductsService);  
 
   productsResource = rxResource({
-    params: ()=> ({}),
-    stream: ({params}) =>{
-      return this.productsService.getProducts();
+    params: ()=> ({      
+    }),
+    stream: ({params}) =>{   
+     
+      return this.productsService.getProducts({
+      });
     }
-
-  })
-
-  title = signal('Card Title');
-  imageInput = signal('https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp');
-  description = signal('')
+  });
 }

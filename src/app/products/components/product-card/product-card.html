@@ -1,14 +1,14 @@
 <div class="card bg-base-100 w-96 shadow-sm animate-fadeIn">
   <figure>
     <img
-      [src]=imageCard()
-      alt="Shoes" />
+      [src]="product().images| productImage"
+      [alt]="product().title" />
   </figure>
   <div class="card-body">
-    <h2 class="card-title">Card Title</h2>
-    <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
+    <a class="card-title font-Montserrat text-accent text-lg hover:underline" [routerLink]="['/product',product().slug]">{{product().title}}</a>
+    <p>{{product().description | slice: 0:70}} ... </p>
     <div class="card-actions justify-end">
-     <a class=" link link-accent" [routerLink]="['/product','t-shirt']">Ver producto</a>
+     <a class=" link link-accent" [routerLink]="['/product',product().slug]">Ver producto</a>
     </div>
   </div>
 </div>
