@@ -33,15 +33,24 @@ export class AuthService {
 
     user = computed<User | null>(() => this._user());
     token = computed(this._token);
+    isAdmin = computed(()=> this._user()?.roles.includes("admin") ?? false);
+
 
     login(email: string, password: string): Observable<boolean> {
+        
+        
+    
         return this.http.post<AuthResponse>(`http://localhost:3000/api/auth/login`, {
             email: email,
             password: password
+            
         }).pipe(
             map((resp) => this.handleAuthSucces(resp)),
             catchError((error: any) => this.handleAuthError(error))
         );
+
+        
+           
     }
 
     checkStatus(): Observable<boolean> {
@@ -53,11 +62,12 @@ export class AuthService {
         }
 
         return this.http.get<AuthResponse>(`http://localhost:3000/api/auth/check-status`, {
-            // headers: {
-            //     Authorization: `Bearer ${token}`
-            // },
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
         }).pipe(         
             map((resp) => this.handleAuthSucces(resp)),
+            
             catchError((error: any) => this.handleAuthError(error))
         )
     }
@@ -67,11 +77,12 @@ export class AuthService {
             this._token.set(null),
             this._authStatus.set('not-authenticated')
 
-            //TODO revertir
-        // localStorage.removeItem('token')
+           
+        localStorage.removeItem('token')
     }
 
     private handleAuthSucces({ token, user }: AuthResponse) {
+
         this._user.set(user);
         this._authStatus.set('authenticated');
         this._token.set(token);
@@ -82,6 +93,7 @@ export class AuthService {
     }
 
     private handleAuthError(error: any) {
+
         this.logout();
         return of(false);
     }
