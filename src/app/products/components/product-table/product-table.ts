@@ -1,9 +1,12 @@
 import { Component, input } from '@angular/core';
 import { Product } from '../../interfaces/product.interfaces';
+import { ProductImagePipe } from '../../pipes/product-image.pipe';
+import { RouterLink } from '@angular/router';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'product-table',
-  imports: [],
+  imports: [ProductImagePipe, RouterLink, CurrencyPipe],
   templateUrl: './product-table.html',
 })
 export class ProductTable {

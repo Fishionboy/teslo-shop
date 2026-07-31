@@ -62,9 +62,9 @@ export class AuthService {
         }
 
         return this.http.get<AuthResponse>(`http://localhost:3000/api/auth/check-status`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            },
+            // headers: {
+            //     Authorization: `Bearer ${token}`
+            // },
         }).pipe(         
             map((resp) => this.handleAuthSucces(resp)),
             
