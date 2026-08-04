@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, computed, ElementRef, input, viewChild } from '@angular/core';
+import { AfterViewInit, Component, computed, ElementRef, input, OnChanges, SimpleChanges, viewChild } from '@angular/core';
 import Swiper from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -12,7 +12,7 @@ SwiperCore.use([Navigation, Pagination]);
   selector: 'product-carousel',
   imports: [ProductImagePipe],
   templateUrl: './product-carousel.html',
-  styles:`
+  styles: `
   .swiper{
     width: 100%;
     height: 500px;
@@ -21,38 +21,64 @@ SwiperCore.use([Navigation, Pagination]);
   `
 })
 
-export class ProductCarousel implements AfterViewInit{
+export class ProductCarousel implements AfterViewInit, OnChanges {
   images = input.required<string[]>();
+  swiperDiv = viewChild.required<ElementRef>('swiperDiv');
 
-  swiperDiv = viewChild.required<ElementRef>('swiperDiv')
+  swiper: Swiper | undefined = undefined;
 
-    ngAfterViewInit(): void {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['images'].firstChange) {
+      return;
+    }
+
+    if (!this.swiper) return;
+
+    this.swiper.destroy(true, true);
+
+    const paginationEl: HTMLDivElement =
+      this.swiperDiv().nativeElement?.querySelector('.swiper-pagination');
+    paginationEl.innerHTML = '';
+
+
+    setTimeout(() => {
+      this.swiperInit();      
+    }, 100);
+    
+  }
+
+
+  ngAfterViewInit(): void {
+    this.swiperInit();
+  }
+
+  swiperInit() {
     const element = this.swiperDiv().nativeElement;
     if (!element) return;
 
-    const swiper = new Swiper(element, {
-  // Optional parameters
-  direction: 'horizontal',
-  loop: true,
+    this.swiper = new Swiper(element, {
+      // Optional parameters
+      direction: 'horizontal',
+      loop: true,
 
- 
 
-  // If we need pagination
-  pagination: {
-    el: '.swiper-pagination',
-  },
 
-  // Navigation arrows
-  navigation: {
-    nextEl: '.swiper-button-next',
-    prevEl: '.swiper-button-prev',
-  },
+      // If we need pagination
+      pagination: {
+        el: '.swiper-pagination',
+      },
 
-  // And if we need scrollbar
-  scrollbar: {
-    el: '.swiper-scrollbar',
-  },
-});
+      // Navigation arrows
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+
+      // And if we need scrollbar
+      scrollbar: {
+        el: '.swiper-scrollbar',
+      },
+    });
 
   }
 }
